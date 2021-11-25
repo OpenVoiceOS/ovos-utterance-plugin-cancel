@@ -24,12 +24,14 @@
 # SOFTWARE,  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from os.path import join, dirname, isfile
 
-from ovos_utils.log import LOG
-
 from neon_transformers import UtteranceTransformer
+from neon_transformers.tasks import UtteranceTask
+from ovos_utils.log import LOG
 
 
 class Nevermind(UtteranceTransformer):
+    task = UtteranceTask.TRANSFORM
+
     def __init__(self, name="utterance_cancel", priority=15):
         super().__init__(name, priority)
 
