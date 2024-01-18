@@ -38,7 +38,7 @@ class NevermindPlugin(UtteranceTransformer):
 
     @lru_cache()
     def get_cancel_words(self, lang="en-us"):
-        res_path = join(dirname(__file__), "res", lang, "cancel.dialog")
+        res_path = join(dirname(__file__), "locale", lang, "cancel.dialog")
         if isfile(res_path):
             lines = list()
             with open(res_path) as f:
