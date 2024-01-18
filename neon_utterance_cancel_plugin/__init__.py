@@ -24,19 +24,18 @@
 # SOFTWARE,  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from os.path import join, dirname, isfile
 
-from neon_transformers import UtteranceTransformer
-from neon_transformers.tasks import UtteranceTask
+from functools import lru_cache
+from ovos_plugin_manager.templates.transformers import UtteranceTransformer
 from ovos_utils.log import LOG
 
 
 class Nevermind(UtteranceTransformer):
-    task = UtteranceTask.TRANSFORM
 
-    def __init__(self, name="utterance_cancel", priority=15):
+    def __init__(self, name="ovos-utterance-cancel", priority=15):
         super().__init__(name, priority)
 
-    @staticmethod
-    def get_cancel_words(lang="en-us"):
+    @lru_cache()
+    def get_cancel_words(self, lang="en-us"):
         res_path = join(dirname(__file__), "res", lang, "cancel.dialog")
         if isfile(res_path):
             with open(res_path) as f:
@@ -45,8 +44,8 @@ class Nevermind(UtteranceTransformer):
         else:
             LOG.warning(f"cancel.dialog not available for {lang}")
         return []
-
-    def transform(self, utterances, context):
+        
+    def transform(self, utterances: List[str], context: Optional[dict] = None) -> (list, dict):
         lang = context.get("lang", "en-us")
         for nevermind in self.get_cancel_words(lang):
             for utterance in utterances:
