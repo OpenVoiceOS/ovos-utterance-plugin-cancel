@@ -29,7 +29,7 @@ from ovos_plugin_manager.templates.transformers import UtteranceTransformer
 from ovos_utils.log import LOG
 
 
-class Nevermind(UtteranceTransformer):
+class NevermindPlugin(UtteranceTransformer):
 
     def __init__(self, name="ovos-utterance-cancel", priority=15):
         super().__init__(name, priority)
