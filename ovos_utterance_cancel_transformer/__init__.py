@@ -23,10 +23,12 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE,  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from os.path import join, dirname, isfile
+from typing import List, Optional
 
 from functools import lru_cache
 from ovos_plugin_manager.templates.transformers import UtteranceTransformer
 from ovos_utils.log import LOG
+from ovos_utils.bracket_expansion import expand_options
 
 
 class NevermindPlugin(UtteranceTransformer):
@@ -38,9 +40,13 @@ class NevermindPlugin(UtteranceTransformer):
     def get_cancel_words(self, lang="en-us"):
         res_path = join(dirname(__file__), "res", lang, "cancel.dialog")
         if isfile(res_path):
+            lines = list()
             with open(res_path) as f:
-                return [l.strip() for l in f.read().split("\n")
-                        if l and not l.startswith("#")]
+                for line in f.readlines():
+                    if line.startswith("#"):
+                        continue
+                    lines.extend(expand_options(line))
+            return lines
         else:
             LOG.warning(f"cancel.dialog not available for {lang}")
         return []
