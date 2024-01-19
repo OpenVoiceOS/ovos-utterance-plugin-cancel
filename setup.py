@@ -2,14 +2,28 @@
 import os
 
 from setuptools import setup
+from ovos_utils.log import LOG
+
+# parse the repo name from the git repository
+
+URL = "https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel"
+PLUGIN_CLAZZ = "NevermindPlugin"
+
+AUTHOR, REPO = URL.split(".com/")[-1].split("/")
+ADDITIONAL_AUTHORS = ["jarbasai"]
+AUTHORS = ADDITIONAL_AUTHORS + [AUTHOR]
+PKG = REPO.lower().replace('-', '_')
 
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
+PKGDIR = os.path.join(BASEDIR, PKG)
+UTTERANCE_ENTRY_POINT = f'{REPO.lower()}={PKG}:{PLUGIN_CLAZZ}'
 
 
 def get_version():
     """ Find the version of the package"""
     version = None
-    version_file = os.path.join(BASEDIR, 'ovos_utterance_cancel_transformer', 'version.py')
+    version_file = os.path.join(PKGDIR, 'version.py')
+    LOG.error(f"version file: {version_file}")
     major, minor, build, alpha = (None, None, None, None)
     with open(version_file) as f:
         for line in f:
@@ -31,19 +45,34 @@ def get_version():
     return version
 
 
-UTTERANCE_ENTRY_POINT = (
-    'ovos-utterance-cancel-plugin=ovos_utterance_cancel_transformer:NevermindPlugin'
-)
+def find_resource_files():
+    resource_base_dirs = ("locale", "res",)  # Removed "ui"
+    package_data = list()
+    for res in resource_base_dirs:
+        if os.path.isdir(os.path.join(PKGDIR, res)):
+            for directory, _, files in os.walk(os.path.join(PKGDIR, res)):
+                for f in files:
+                    path = os.path.relpath(os.path.join(directory, f), PKGDIR)
+                    package_data.append(path)
+    LOG.error(f"package_data: {package_data}")
+    return package_data
+
+
+with open(os.path.join(BASEDIR, "README.md"), "r") as f:
+    long_description = f.read()
 
 
 setup(
-    name='ovos-utterance-cancel-plugin',
+    name=REPO,
+    description='OpenVoiceOS Utterance Cancel Plugin',
+    long_description=long_description,
     version=get_version(),
-    author='jarbasai',
+    author=AUTHORS,
     author_email='jarbasai@mailfence.com',
-    url='https://github.com/OpenVoiceOS/ovos-utterance-cancel-plugin',
+    url=URL,
     license='apache-2.0',
-    packages=['ovos_utterance_corrections_transformer'],
+    packages=[PKG],
+    package_data={PKG: find_resource_files()},
     include_package_data=True,
     zip_safe=True,
     classifiers=[
