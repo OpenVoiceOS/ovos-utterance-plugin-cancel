@@ -2,7 +2,6 @@
 import os
 
 from setuptools import setup
-from ovos_utils.log import LOG
 
 # parse the repo name from the git repository
 
@@ -54,7 +53,7 @@ def find_resource_files():
                 for f in files:
                     path = os.path.relpath(os.path.join(directory, f), PKGDIR)
                     package_data.append(path)
-    LOG.error(f"package_data: {package_data}")
+    print(f"ERROR: package_data: {package_data}")
     return package_data
 
 
