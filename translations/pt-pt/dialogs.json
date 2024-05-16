@@ -1,0 +1,11 @@
+{
+    "cancel.dialog": [
+        "(esquece|cancela|cancelar)",
+        "(cancela|cancelar|esquecer|anular) (ordem|comado|isso)",
+        "(cancela|cancelar|esquece|esquecer|anular) (a|o) (ultima|ultimo) (ordem|comado)",
+        "(cancela|cancelar|esquece|esquecer|anular) (ultima|ultimo|esse|este|esta) (ordem|comado)",
+        "n\u00e3o (importa|executar) ",
+        "n\u00e3o (importa|executar|executes) (a|o) (ultima|ultimo) (ordem|comado)",
+        "n\u00e3o (importa|executar|executes) (ultima|ultimo|esse|este|esta) (ordem|comado)"
+    ]
+}
