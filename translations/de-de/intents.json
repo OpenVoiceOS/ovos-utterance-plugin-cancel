@@ -1,5 +1,5 @@
 {
-    "cancel.dialog": [
+    "cancel.intent": [
         "(befehl|kommando) (vergessen|zur\u00fccknehmen|aufheben|abbrechen|zur\u00fcck|l\u00f6schen)",
         "(vergess|vergiss|vergesse|l\u00f6sche) (es|(den|diesen) befehl|(dieses|das|) kommando)",
         "(nehme|nehm|nimm) (den|diesen|) (befehl|kommando) zur\u00fcck",
