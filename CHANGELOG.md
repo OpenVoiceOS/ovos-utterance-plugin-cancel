@@ -10,6 +10,7 @@
 
 **Merged pull requests:**
 
+- pt-pt/translate [\#6](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/6) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
 - Fix/setup [\#5](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/5) ([emphasize](https://github.com/emphasize))
 - move to conventional localisation folder [\#4](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/4) ([emphasize](https://github.com/emphasize))
 - remove requirements file [\#3](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/3) ([emphasize](https://github.com/emphasize))
