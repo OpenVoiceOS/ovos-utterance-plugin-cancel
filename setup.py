@@ -11,7 +11,7 @@ PLUGIN_CLAZZ = "NevermindPlugin"
 AUTHOR, REPO = URL.split(".com/")[-1].split("/")
 ADDITIONAL_AUTHORS = ["jarbasai"]
 AUTHORS = ADDITIONAL_AUTHORS + [AUTHOR]
-PKG = REPO.lower().replace('-', '_')
+PKG = "ovos_utterance_plugin_cancel"
 
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 PKGDIR = os.path.join(BASEDIR, PKG)
@@ -66,7 +66,7 @@ setup(
     description='OpenVoiceOS Utterance Cancel Plugin',
     long_description=long_description,
     version=get_version(),
-    author=AUTHORS,
+    author=AUTHOR,
     author_email='jarbasai@mailfence.com',
     url=URL,
     license='apache-2.0',
