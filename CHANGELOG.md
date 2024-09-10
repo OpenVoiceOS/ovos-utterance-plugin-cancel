@@ -1,8 +1,8 @@
 # Changelog
 
-## [ERROR:](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/ERROR:) (2024-09-10)
+## [0.2.0a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.0a1) (2024-09-10)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/7dfaa8326fa7dda9c39a54968cd6617bd680f3d6...ERROR:)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/7dfaa8326fa7dda9c39a54968cd6617bd680f3d6...0.2.0a1)
 
 **Implemented enhancements:**
 
