@@ -21,7 +21,6 @@ UTTERANCE_ENTRY_POINT = f'{REPO.lower()}={PKG}:{PLUGIN_CLAZZ}'
 def get_version():
     """ Find the version of the package"""
     version_file = f'{BASEDIR}/ovos_utterance_plugin_cancel/version.py'
-    print(f"ERROR: version file: {version_file}")
     major, minor, build, alpha = (None, None, None, None)
     with open(version_file) as f:
         for line in f:
@@ -52,7 +51,6 @@ def find_resource_files():
                 for f in files:
                     path = os.path.relpath(os.path.join(directory, f), PKGDIR)
                     package_data.append(path)
-    print(f"ERROR: package_data: {package_data}")
     return package_data
 
 

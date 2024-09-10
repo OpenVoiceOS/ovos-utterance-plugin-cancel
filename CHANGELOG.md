@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/HEAD)
+## [0.2.0a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.0a1) (2024-09-10)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/7dfaa8326fa7dda9c39a54968cd6617bd680f3d6...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/7dfaa8326fa7dda9c39a54968cd6617bd680f3d6...0.2.0a1)
 
 **Implemented enhancements:**
 
@@ -10,6 +10,7 @@
 
 **Merged pull requests:**
 
+- feat:release [\#8](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/8) ([JarbasAl](https://github.com/JarbasAl))
 - pt-pt/translate [\#6](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/6) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
 - Fix/setup [\#5](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/5) ([emphasize](https://github.com/emphasize))
 - move to conventional localisation folder [\#4](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/4) ([emphasize](https://github.com/emphasize))
