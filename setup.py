@@ -51,7 +51,6 @@ def find_resource_files():
                 for f in files:
                     path = os.path.relpath(os.path.join(directory, f), PKGDIR)
                     package_data.append(path)
-    print(f"ERROR: package_data: {package_data}")
     return package_data
 
 
