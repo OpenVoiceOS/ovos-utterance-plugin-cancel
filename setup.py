@@ -20,8 +20,7 @@ UTTERANCE_ENTRY_POINT = f'{REPO.lower()}={PKG}:{PLUGIN_CLAZZ}'
 
 def get_version():
     """ Find the version of the package"""
-    version = None
-    version_file = os.path.join(PKGDIR, 'version.py')
+    version_file = f'{BASEDIR}/ovos_utterance_plugin_cancel/version.py'
     print(f"ERROR: version file: {version_file}")
     major, minor, build, alpha = (None, None, None, None)
     with open(version_file) as f:
