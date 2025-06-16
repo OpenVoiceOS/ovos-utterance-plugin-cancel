@@ -1,26 +1,17 @@
 # Changelog
 
-## [0.2.3a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.3a2) (2024-12-06)
+## [0.2.4a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.4a1) (2025-06-04)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.3a1...0.2.3a2)
-
-**Merged pull requests:**
-
-- requirements: ovos-utils version [\#17](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/17) ([JarbasAl](https://github.com/JarbasAl))
-- de-de/translate [\#16](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/16) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
-- added italian [\#15](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/15) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
-
-## [0.2.3a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.3a1) (2024-11-02)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/V0.2.2...0.2.3a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/V0.2.3...0.2.4a1)
 
 **Merged pull requests:**
 
-- da-dk/translate [\#14](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/14) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+- gl/translate [\#20](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/20) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+- Galician translation [\#19](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/19) ([daniferlop](https://github.com/daniferlop))
 
-## [V0.2.2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/V0.2.2) (2024-10-16)
+## [V0.2.3](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/V0.2.3) (2024-12-06)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.2...V0.2.2)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.3...V0.2.3)
 
 
 
