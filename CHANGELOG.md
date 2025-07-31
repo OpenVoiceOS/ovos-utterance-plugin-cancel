@@ -1,17 +1,16 @@
 # Changelog
 
-## [0.2.4a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.4a1) (2025-06-04)
+## [0.2.5a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.5a1) (2025-07-31)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/V0.2.3...0.2.4a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/V0.2.4...0.2.5a1)
 
 **Merged pull requests:**
 
-- gl/translate [\#20](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/20) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
-- Galician translation [\#19](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/19) ([daniferlop](https://github.com/daniferlop))
+- Add pt-BR [\#22](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/22) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
 
-## [V0.2.3](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/V0.2.3) (2024-12-06)
+## [V0.2.4](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/V0.2.4) (2025-06-16)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.3...V0.2.3)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.4...V0.2.4)
 
 
 
