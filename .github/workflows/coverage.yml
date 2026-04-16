@@ -7,7 +7,7 @@ on:
 
 jobs:
   coverage:
-    uses: OpenVoiceOS/gh-automations/.github/workflows/coverage.yml@05c0bb438ca7d2bc485465bc233fd4e1997f23c5
+    uses: OpenVoiceOS/gh-automations/.github/workflows/coverage.yml@dev
     secrets:
       PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
       MATRIX_TOKEN: ${{ secrets.MATRIX_TOKEN }}
