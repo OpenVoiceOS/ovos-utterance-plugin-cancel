@@ -27,7 +27,23 @@ To add a language, create `ovos_utterance_plugin_cancel/locale/<lang>/cancel.int
 
 ## Configuration
 
-No configuration needed. OVOS loads the plugin automatically via the entry point `ovos.utterance.transformer`.
+This plugin is **enabled by default** in `ovos-config` alongside the other standard utterance transformers:
+
+```json
+"utterance_transformers": {
+    "ovos-utterance-normalizer": {},
+    "ovos-utterance-plugin-cancel": {},
+    "ovos-utterance-corrections-plugin": {}
+}
+```
+
+To disable it, add `"enable": false` to your config:
+
+```json
+"utterance_transformers": {
+    "ovos-utterance-plugin-cancel": {"enable": false}
+}
+```
 
 ## Development
 
@@ -37,8 +53,6 @@ cd ovos-utterance-plugin-cancel
 pip install -e ".[dev]"
 uv run pytest test/ -v --cov=ovos_utterance_plugin_cancel
 ```
-
-See [docs/index.md](docs/index.md) for architecture details.
 
 ## Credits
 
