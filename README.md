@@ -1,10 +1,46 @@
-# Nevermind
+# ovos-utterance-plugin-cancel
 
-plugin to look at the tail end of the transcribed phrase, ignoring the utterance if it ends with "nevermind that" or "cancel it" or "ignore that". 
+[![PyPI](https://img.shields.io/pypi/v/ovos-utterance-plugin-cancel)](https://pypi.org/project/ovos-utterance-plugin-cancel/)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
-This is for use case like: `"Hey Mycroft, can you tell me the...ummm...oh, nevermind that"`
+An [OVOS](https://openvoiceos.org) utterance transformer plugin that cancels an utterance when the user says a cancel/nevermind phrase at the end.
 
+**Example:** *"Hey OVOS, can you tell me the weather in… ugh, nevermind that"* → utterance is dropped, no skill fires.
+
+## Installation
+
+```bash
+pip install ovos-utterance-plugin-cancel
+```
+
+## How it works
+
+The plugin runs before skill matching. It checks whether the utterance tail matches any phrase from `locale/<lang>/cancel.intent`. On a match, it returns an empty utterance list with context `{"canceled": True, "cancel_word": "<phrase>"}`.
+
+Language selection is automatic via `langcodes.closest_match`. Phrases support bracket-expansion syntax (e.g. `cancel (it|that)`).
+
+## Supported languages
+
+`ca-ES` · `da-DK` · `de-DE` · `en-US` · `es-ES` · `fr-FR` · `gl-ES` · `it-IT` · `nl-NL` · `pt-BR` · `pt-PT`
+
+To add a language, create `ovos_utterance_plugin_cancel/locale/<lang>/cancel.intent` with one phrase per line.
+
+## Configuration
+
+No configuration needed. OVOS loads the plugin automatically via the entry point `ovos.utterance.transformer`.
+
+## Development
+
+```bash
+git clone https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel
+cd ovos-utterance-plugin-cancel
+pip install -e ".[dev]"
+uv run pytest test/ -v --cov=ovos_utterance_plugin_cancel
+```
+
+See [docs/index.md](docs/index.md) for architecture details.
 
 ## Credits
-- [@penrods](https://github.com/MycroftAI/mycroft-core/pull/1274) - original PR in mycroft-core
-- [NeonGecko](https://github.com/NeonGeckoCom/neon-utterance-plugin-cancel) - original plugin
+
+- [@penrods](https://github.com/MycroftAI/mycroft-core/pull/1274) — original Mycroft PR
+- [NeonGecko](https://github.com/NeonGeckoCom/neon-utterance-plugin-cancel) — original plugin
