@@ -3,9 +3,9 @@
 [![PyPI](https://img.shields.io/pypi/v/ovos-utterance-plugin-cancel)](https://pypi.org/project/ovos-utterance-plugin-cancel/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
-An [OVOS](https://openvoiceos.org) utterance transformer plugin that cancels an utterance when the user says a cancel/nevermind phrase at the end.
+An [OpenVoiceOS](https://openvoiceos.org) utterance transformer plugin that cancels an utterance when the user says a cancel/nevermind phrase at the end.
 
-**Example:** *"Hey OVOS, can you tell me the weather in… ugh, nevermind that"* → utterance is dropped, no skill fires.
+**Example:** *"Hey Mycroft, can you tell me the weather in… ugh, nevermind that"* → utterance is dropped, no skill fires.
 
 ## Installation
 
