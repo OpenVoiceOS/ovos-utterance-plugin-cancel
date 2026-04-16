@@ -1,0 +1,13 @@
+name: License Check
+
+on:
+  pull_request:
+    branches: [dev]
+  workflow_dispatch:
+
+jobs:
+  license_check:
+    uses: OpenVoiceOS/gh-automations/.github/workflows/license-check.yml@05c0bb438ca7d2bc485465bc233fd4e1997f23c5
+    secrets:
+      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+      MATRIX_TOKEN: ${{ secrets.MATRIX_TOKEN }}
