@@ -131,5 +131,99 @@ class TestNevermindPlugin(unittest.TestCase):
         self.assertEqual(p.priority, 5)
 
 
+class TestNevermindPluginLocales(unittest.TestCase):
+    """Smoke-test cancel detection for every shipped locale.
+
+    Each case picks one phrase that must appear verbatim in the locale file
+    (or is produced by bracket-expansion of a template in that file) and
+    verifies the plugin actually cancels when the utterance ends with it.
+    """
+
+    def setUp(self) -> None:
+        self.plugin = NevermindPlugin()
+
+    def _assert_cancels(self, utterance: str, lang: str) -> None:
+        utterances, ctx = self.plugin.transform([utterance], {"lang": lang})
+        self.assertEqual(utterances, [], f"[{lang}] expected cancel for: {utterance!r}")
+        self.assertTrue(ctx.get("canceled"), f"[{lang}] 'canceled' not set for: {utterance!r}")
+
+    def _assert_passes(self, utterance: str, lang: str) -> None:
+        utterances, ctx = self.plugin.transform([utterance], {"lang": lang})
+        self.assertNotEqual(utterances, [], f"[{lang}] expected passthrough for: {utterance!r}")
+        self.assertFalse(ctx.get("canceled"), f"[{lang}] unexpected cancel for: {utterance!r}")
+
+    def test_ca_es_cancel(self) -> None:
+        self._assert_cancels("cancel·la això", "ca-ES")
+
+    def test_ca_es_passthrough(self) -> None:
+        self._assert_passes("posa la llum", "ca-ES")
+
+    def test_da_dk_cancel(self) -> None:
+        self._assert_cancels("afbryd det", "da-DK")
+
+    def test_da_dk_passthrough(self) -> None:
+        self._assert_passes("tænd lyset", "da-DK")
+
+    def test_de_de_cancel(self) -> None:
+        self._assert_cancels("vergiss das", "de-DE")
+
+    def test_de_de_passthrough(self) -> None:
+        self._assert_passes("mach das licht an", "de-DE")
+
+    def test_en_us_cancel(self) -> None:
+        self._assert_cancels("nevermind that", "en-US")
+
+    def test_en_us_passthrough(self) -> None:
+        self._assert_passes("turn on the lights", "en-US")
+
+    def test_es_es_cancel(self) -> None:
+        self._assert_cancels("cancela eso", "es-ES")
+
+    def test_es_es_passthrough(self) -> None:
+        self._assert_passes("pon la luz", "es-ES")
+
+    def test_fr_fr_cancel(self) -> None:
+        self._assert_cancels("annuler que", "fr-FR")
+
+    def test_fr_fr_passthrough(self) -> None:
+        self._assert_passes("allume la lumière", "fr-FR")
+
+    def test_gl_es_cancel(self) -> None:
+        self._assert_cancels("cancelar iso", "gl-ES")
+
+    def test_gl_es_passthrough(self) -> None:
+        self._assert_passes("acende a luz", "gl-ES")
+
+    def test_it_it_cancel(self) -> None:
+        self._assert_cancels("lascia perdere il comando", "it-IT")
+
+    def test_it_it_passthrough(self) -> None:
+        self._assert_passes("accendi la luce", "it-IT")
+
+    def test_nl_nl_cancel(self) -> None:
+        self._assert_cancels("annuleren", "nl-NL")
+
+    def test_nl_nl_passthrough(self) -> None:
+        self._assert_passes("doe het licht aan", "nl-NL")
+
+    def test_pt_br_cancel(self) -> None:
+        self._assert_cancels("cancele", "pt-BR")
+
+    def test_pt_br_passthrough(self) -> None:
+        self._assert_passes("acenda a luz", "pt-BR")
+
+    def test_pt_pt_cancel(self) -> None:
+        self._assert_cancels("cancelar isso", "pt-PT")
+
+    def test_pt_pt_passthrough(self) -> None:
+        self._assert_passes("liga a luz", "pt-PT")
+
+    def test_all_locales_have_cancel_words(self) -> None:
+        for lang in ("ca-ES", "da-DK", "de-DE", "en-US", "es-ES",
+                     "fr-FR", "gl-ES", "it-IT", "nl-NL", "pt-BR", "pt-PT"):
+            words = self.plugin.get_cancel_words(lang)
+            self.assertGreater(len(words), 0, f"No cancel words loaded for {lang}")
+
+
 if __name__ == "__main__":
     unittest.main()
