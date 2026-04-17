@@ -70,11 +70,12 @@ class NevermindPlugin(UtteranceTransformer):
             res_path = join(locale_dir, best_lang, "cancel.intent")
             lines: List[str] = []
             with open(res_path) as f:
-                for line in f.readlines():
-                    if line.startswith("#"):
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
                         continue
                     lines.extend(expand_template(line))
-            return list({l for l in lines if l.strip()})
+            return list({l.strip() for l in lines if l.strip()})
         LOG.warning(f"cancel.intent not available for {lang}")
         return []
 

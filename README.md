@@ -50,7 +50,7 @@ To disable it, add `"enable": false` to your config:
 ```bash
 git clone https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel
 cd ovos-utterance-plugin-cancel
-pip install -e ".[dev]"
+uv pip install -e ".[dev]"
 uv run pytest test/ -v --cov=ovos_utterance_plugin_cancel
 ```
 
