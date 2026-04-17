@@ -1,16 +1,40 @@
 # Changelog
 
-## [0.2.5a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.5a1) (2025-07-31)
+## [0.2.8a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.8a1) (2026-04-17)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/V0.2.4...0.2.5a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.7a2...0.2.8a1)
 
 **Merged pull requests:**
 
-- Add pt-BR [\#22](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/22) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+- fix: drop setup.py and requirements.txt [\#30](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/30) ([JarbasAl](https://github.com/JarbasAl))
 
-## [V0.2.4](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/V0.2.4) (2025-06-16)
+## [0.2.7a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.7a2) (2026-04-17)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.4...V0.2.4)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.7a1...0.2.7a2)
+
+**Merged pull requests:**
+
+- ci: modernize workflows, add pyproject.toml, type hints and tests [\#28](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/28) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.7a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.7a1) (2026-04-03)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.6a1...0.2.7a1)
+
+**Merged pull requests:**
+
+- fix\(i18n\): normalize locale folders to canonical BCP-47 [\#26](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/26) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.6a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.6a1) (2025-11-24)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/V0.2.5...0.2.6a1)
+
+**Merged pull requests:**
+
+- es-es/translate [\#24](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/24) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+
+## [V0.2.5](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/V0.2.5) (2025-07-31)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.5...V0.2.5)
 
 
 
