@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ovos-utterance-plugin-cancel"
+dynamic = ["version"]
+description = "OpenVoiceOS Utterance Cancel Plugin"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "OpenVoiceOS", email = "openvoiceos@gmail.com" }
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Text Processing :: Linguistic",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "ovos-utils>=0.6.0,<1.0.0",
+    "ovos-plugin-manager>=0.0.1",
+    "langcodes>=3.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+]
+
+[project.urls]
+Homepage = "https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel"
+
+[project.entry-points."ovos.utterance.transformer"]
+ovos-utterance-cancel-plugin = "ovos_utterance_plugin_cancel:NevermindPlugin"
+
+[tool.setuptools]
+packages = ["ovos_utterance_plugin_cancel"]
+
+[tool.setuptools.package-data]
+ovos_utterance_plugin_cancel = ["locale/**/*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "ovos_utterance_plugin_cancel.version.__version__"}
