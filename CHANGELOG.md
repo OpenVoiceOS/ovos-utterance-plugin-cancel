@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.7a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.7a2) (2026-04-17)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.7a1...0.2.7a2)
+
+**Merged pull requests:**
+
+- ci: modernize workflows, add pyproject.toml, type hints and tests [\#28](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/28) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.7a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.7a1) (2026-04-03)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.6a1...0.2.7a1)
