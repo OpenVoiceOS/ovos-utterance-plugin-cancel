@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.8a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.8a1) (2026-04-17)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.7a2...0.2.8a1)
+
+**Merged pull requests:**
+
+- fix: drop setup.py and requirements.txt [\#30](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/30) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.7a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.7a2) (2026-04-17)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.7a1...0.2.7a2)
