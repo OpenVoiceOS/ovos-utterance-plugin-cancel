@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.0a1) (2026-05-25)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.9a1...0.3.0a1)
+
+**Merged pull requests:**
+
+- feat: cancel.blacklist veto for utterances \*about\* a cancel word \(partial \#7\) [\#35](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/35) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.9a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.9a1) (2026-05-25)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.8...0.2.9a1)
