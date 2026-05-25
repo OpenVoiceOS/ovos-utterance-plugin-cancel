@@ -132,6 +132,38 @@ class TestCancelPluginEnabled(_CancelPluginTestBase):
             ],
         ).execute(timeout=10)
 
+    # --- skip-prefix veto (issue #7 partial fix) ---------------------------
+
+    def test_blacklist_prefix_vetoes_cancel(self):
+        """An utterance starting with a phrase from ``cancel.blacklist``
+        bypasses the cancel suffix match even when it ends in a cancel
+        word (OVOS-INTENT-2 §4.3 blacklist role).
+
+        Partial fix for issue #7: utterances *about* the cancel word
+        (define / spell / pronounce / what-is / how-do-you / ...) are
+        not commands to cancel."""
+        session = Session("123")
+        session.lang = "en-US"
+        # ``nevermind that`` IS in en-US/cancel.voc — without the
+        # blacklist prefix, ``hello world nevermind that`` fires the
+        # cancel sequence (see test_cancel_suffix_on_arbitrary_utterance).
+        # ``spell`` as a blacklist prefix vetoes it.
+        message = self._utterance("spell nevermind that", session)
+
+        End2EndTest(
+            minicroft=self.minicroft,
+            skill_ids=[self.skill_id],
+            source_message=message,
+            expected_messages=[
+                message,
+                # No cancel sequence — intent failure (hello-world
+                # doesn't register a "spell" intent in this rig).
+                Message("mycroft.audio.play_sound", {"uri": "snd/error.mp3"}),
+                Message("complete_intent_failure", {}),
+                Message("ovos.utterance.handled", {}),
+            ],
+        ).execute(timeout=10)
+
     # --- smoke: passthrough --------------------------------------------------
 
     def test_passthrough_without_cancel_word(self):
