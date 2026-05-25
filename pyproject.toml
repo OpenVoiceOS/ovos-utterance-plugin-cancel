@@ -41,7 +41,7 @@ test = [
 [project.urls]
 Homepage = "https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel"
 
-[project.entry-points."ovos.utterance.transformer"]
+[project.entry-points."opm.transformer.text"]
 ovos-utterance-cancel-plugin = "ovos_utterance_plugin_cancel:NevermindPlugin"
 
 [tool.setuptools]
