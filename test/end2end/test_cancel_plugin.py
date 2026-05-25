@@ -9,14 +9,29 @@ from unittest import TestCase
 
 from ovos_bus_client.message import Message
 from ovos_bus_client.session import Session
+from ovos_config import Configuration
 from ovos_utils.log import LOG
 from ovoscope import End2EndTest, get_minicroft
+
+
+# The entry-point name under which this plugin is registered. Must
+# appear in ``Configuration().utterance_transformers`` for the OVOS
+# UtteranceTransformersService to load it — otherwise it is silently
+# skipped (ovos_core/transformers.py:29).
+PLUGIN_NAME = "ovos-utterance-cancel-plugin"
 
 
 class TestCancelIntentMidSentence(TestCase):
 
     def setUp(self):
         LOG.set_level("DEBUG")
+        # Enable the cancel transformer in the (isolated) test config
+        # before booting MiniCroft. MiniCroft replaces the user's XDG
+        # configs with an empty list, so adding the key here only
+        # affects the test process.
+        Configuration()["utterance_transformers"] = {
+            PLUGIN_NAME: {"active": True}}
+
         self.skill_id = "ovos-skill-hello-world.openvoiceos"
         self.minicroft = get_minicroft([self.skill_id])
 
