@@ -88,24 +88,30 @@ class NevermindPlugin(UtteranceTransformer):
 
     @lru_cache()
     def get_cancel_words(self, lang: str = "en-US") -> List[str]:
-        """Return the list of cancel phrases for *lang*.
-
-        Phrases are loaded via :class:`ovos_spec_tools.LocaleResources`,
-        which applies the OVOS-INTENT-2 §2.2 smart language fallback and
-        the §3.6 sentence-template expansion. The result is LRU-cached per
-        language tag for the lifetime of the process.
-
-        Args:
-            lang: BCP-47 language tag (e.g. ``"en-US"``).
-
-        Returns:
-            List of cancel phrases, or an empty list when no locale is close
-            enough (distance ≥ 10).
-        """
+        """Return the cancel phrases for *lang* (``cancel.voc``)."""
         try:
             phrases = self._resources.load_vocabulary("cancel", lang)
         except FileNotFoundError:
             LOG.warning(f"cancel.voc not available for {lang}")
+            return []
+        return list({phrase.strip() for phrase in phrases if phrase.strip()})
+
+    @lru_cache()
+    def get_cancel_blacklist(self, lang: str = "en-US") -> List[str]:
+        """Return the *veto prefixes* for *lang* (``cancel.blacklist``).
+
+        OVOS-INTENT-2 §4.3 defines ``.blacklist`` as a phrase set that
+        an engine consults to *exclude* matches. Here, utterances that
+        start with any phrase in ``cancel.blacklist`` bypass the cancel
+        suffix match — they are *about* a cancel word (define / spell /
+        pronounce / play / etc.) rather than commands to cancel.
+        Partial fix for issue #7. A missing ``cancel.blacklist`` is
+        non-fatal: the plugin falls back to the historic
+        "always check the suffix" behaviour.
+        """
+        try:
+            phrases = self._resources.load_blacklist("cancel", lang)
+        except FileNotFoundError:
             return []
         return list({phrase.strip() for phrase in phrases if phrase.strip()})
 
@@ -115,6 +121,11 @@ class NevermindPlugin(UtteranceTransformer):
         context: Optional[Dict[str, object]] = None,
     ) -> Tuple[List[str], Dict[str, object]]:
         """Drop utterances that end with a cancel phrase.
+
+        Skipped when the utterance starts with a phrase listed in
+        ``cancel.blacklist`` for the active language — partial veto for
+        the edge cases tracked in issue #7 (e.g. ``"say nevermind"``,
+        ``"what is the opposite of nevermind"``).
 
         Args:
             utterances: Recognised utterance candidates.
@@ -128,8 +139,11 @@ class NevermindPlugin(UtteranceTransformer):
             original utterances are returned unchanged with an empty dict.
         """
         lang = _resolve_lang(context)
+        blacklist = self.get_cancel_blacklist(lang)
         for nevermind in self.get_cancel_words(lang):
             for utterance in utterances:
+                if any(utterance.startswith(p) for p in blacklist):
+                    continue
                 if utterance.endswith(nevermind):
                     return [], {"canceled": True, "cancel_word": nevermind}
         return utterances, {}
