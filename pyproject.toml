@@ -42,10 +42,7 @@ test = [
 Homepage = "https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel"
 
 [project.entry-points."ovos.utterance.transformer"]
-# Name MUST match the key the default OVOS config uses under
-# `utterance_transformers` (ovos_config/mycroft.conf), otherwise
-# the plugin is silently skipped by UtteranceTransformersService.
-ovos-utterance-plugin-cancel = "ovos_utterance_plugin_cancel:NevermindPlugin"
+ovos-utterance-cancel-plugin = "ovos_utterance_plugin_cancel:NevermindPlugin"
 
 [tool.setuptools]
 packages = ["ovos_utterance_plugin_cancel"]

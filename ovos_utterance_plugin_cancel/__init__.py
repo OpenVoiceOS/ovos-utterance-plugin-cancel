@@ -31,6 +31,43 @@ from ovos_spec_tools import LocaleResources, standardize_lang
 from ovos_utils.log import LOG
 
 
+def _resolve_lang(context: Optional[Dict[str, object]],
+                  default: str = "en-US") -> str:
+    """Return the BCP-47 language tag for an UtteranceTransformer call.
+
+    ``context`` is the OVOS-MSG-1 ``message.context`` dict the
+    transformer service hands to ``transform()``. Two sources may carry
+    a language:
+
+    1. ``context["lang"]`` — the top-level convenience key that
+       ovos-core's IntentService writes before invoking transformers
+       (``ovos_core/intent_services/service.py::_handle_transformers``).
+       This is the **current contract** between core and transformer
+       plugins; trust it when present.
+    2. ``context["session"]["lang"]`` — the normative session-carrier
+       field per OVOS-MSG-1 §4. Falls back here when a caller hands the
+       transformer a Message without going through ovos-core's
+       pre-processing (HiveMind relays, tests, alternative bus
+       clients).
+
+    The convenience top-level key is a known gap in the spec — the
+    transformer signature will likely grow an explicit ``lang`` kwarg
+    in a future revision, at which point this helper collapses to a
+    one-liner. Until then, the dual lookup keeps the plugin robust
+    against direct callers.
+
+    ``dict.get(key, default)`` returns ``None`` for keys present with a
+    ``None`` value (only a *missing* key triggers the default), so the
+    ``or`` chain handles explicit ``None`` correctly.
+    """
+    context = context or {}
+    session = context.get("session") or {}
+    lang = (context.get("lang")
+            or session.get("lang")
+            or default)
+    return standardize_lang(lang)
+
+
 class NevermindPlugin(UtteranceTransformer):
     """Utterance transformer that drops utterances ending with a cancel phrase.
 
@@ -90,20 +127,7 @@ class NevermindPlugin(UtteranceTransformer):
             ``{"canceled": True, "cancel_word": <phrase>}``.  Otherwise the
             original utterances are returned unchanged with an empty dict.
         """
-        context = context or {}
-        # ``context`` here is ``message.context`` per OVOS-MSG-1 §4. The
-        # normative language signal lives in the session carrier at
-        # ``context["session"]["lang"]``. ovos-core's IntentService also
-        # copies the resolved lang to a top-level ``context["lang"]`` for
-        # legacy callers (``ovos_core/intent_services/service.py``
-        # ``_handle_transformers``), but treating that as authoritative
-        # breaks for any consumer that hands the transformer a Message
-        # without going through that pre-processing step. Prefer the
-        # session.lang; fall back to the legacy top-level key; default
-        # ``"en-US"`` if neither is set.
-        session = context.get("session") or {}
-        lang = session.get("lang") or context.get("lang") or "en-US"
-        lang = standardize_lang(lang)
+        lang = _resolve_lang(context)
         for nevermind in self.get_cancel_words(lang):
             for utterance in utterances:
                 if utterance.endswith(nevermind):

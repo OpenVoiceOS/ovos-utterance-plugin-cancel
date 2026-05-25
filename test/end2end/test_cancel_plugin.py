@@ -28,7 +28,7 @@ from ovoscope import End2EndTest, get_minicroft
 # OVOS UtteranceTransformersService loads a plugin only when this name
 # appears (with ``active: True``) in ``Configuration().utterance_transformers``
 # — ``ovos_core/transformers.py:29``.
-PLUGIN_NAME = "ovos-utterance-plugin-cancel"
+PLUGIN_NAME = "ovos-utterance-cancel-plugin"
 
 
 class _CancelPluginTestBase(TestCase):
