@@ -1,15 +1,8 @@
-(cancela|cancelar) comando
-(cancela|cancelar) ese comando
-(cancela|cancelar) iso
-(cancela|cancelar) orde
-(cancélao|cancelalo)
-(deixa estar|nada, esquece)
-(esquece iso|esquecer iso)
-(esquecer a orde|esquece a orde)
-(esquecer esa orde|esquece esa orde)
-(esquecer ese comando|esquece ese comando)
-(esquecer o comando|esquece o comando)
-(esquéceo|esquecelo)
-(ignora esa orde|non fagas caso desa orde)
-(ignora ese comando|non fagas caso dese comando)
-cancelar esa orde
+# Documents the matching pattern: an utterance ending with a cancel
+# phrase from cancel.voc, optionally with no leading utterance at all
+# (a standalone cancel).
+#
+# The plugin currently does suffix-matching with the cancel.voc
+# vocabulary; this .intent is informational, not consumed at runtime,
+# and exists so the resource role is unambiguous in the locale folder.
+[{utterance}] <cancel>

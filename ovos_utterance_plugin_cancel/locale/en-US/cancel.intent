@@ -1,15 +1,8 @@
-cancel command
-cancel it
-cancel order
-cancel that
-cancel that command
-cancel that order
-forget command
-forget it
-forget order
-forget that
-forget that command
-forget that order
-nevermind that
-nevermind that command
-nevermind that order
+# Documents the matching pattern: an utterance ending with a cancel
+# phrase from cancel.voc, optionally with no leading utterance at all
+# (a standalone cancel).
+#
+# The plugin currently does suffix-matching with the cancel.voc
+# vocabulary; this .intent is informational, not consumed at runtime,
+# and exists so the resource role is unambiguous in the locale folder.
+[{utterance}] <cancel>
