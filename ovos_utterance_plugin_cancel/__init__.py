@@ -22,13 +22,12 @@
 # LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE,  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-import os
-from os.path import join, dirname, isfile
+from os.path import join, dirname
 from functools import lru_cache
 from typing import Dict, List, Optional, Tuple
 
 from ovos_plugin_manager.templates.transformers import UtteranceTransformer
-from ovos_spec_tools import closest_lang, expand, standardize_lang
+from ovos_spec_tools import LocaleResources, standardize_lang
 from ovos_utils.log import LOG
 
 
@@ -43,13 +42,20 @@ class NevermindPlugin(UtteranceTransformer):
 
     def __init__(self, name: str = "ovos-utterance-cancel", priority: int = 15) -> None:
         super().__init__(name, priority)
+        # OVOS-INTENT-2 resource loader. One instance serves every language
+        # the plugin ships; the language is a parameter of each load call.
+        # The default lang_resolver is `closest_lang` (OVOS-INTENT-2 §2.2
+        # smart fallback), gated on distance < 10.
+        self._resources = LocaleResources(
+            skill_locale=join(dirname(__file__), "locale"))
 
     @lru_cache()
     def get_cancel_words(self, lang: str = "en-US") -> List[str]:
         """Return the list of cancel phrases for *lang*.
 
-        Phrases are read from ``locale/<best_match>/cancel.intent``, expanded
-        via bracket-expansion, and deduplicated.  The result is LRU-cached per
+        Phrases are loaded via :class:`ovos_spec_tools.LocaleResources`,
+        which applies the OVOS-INTENT-2 §2.2 smart language fallback and
+        the §3.6 sentence-template expansion. The result is LRU-cached per
         language tag for the lifetime of the process.
 
         Args:
@@ -57,26 +63,14 @@ class NevermindPlugin(UtteranceTransformer):
 
         Returns:
             List of cancel phrases, or an empty list when no locale is close
-            enough (langcodes distance ≥ 10).
+            enough (distance ≥ 10).
         """
-        locale_dir = join(dirname(__file__), "locale")
-        langs = [d for d in os.listdir(locale_dir)
-                 if isfile(join(locale_dir, d, "cancel.intent"))]
-        # closest_lang gates on the < 10 distance threshold internally and
-        # returns None when no candidate is close enough.
-        best_lang = closest_lang(lang, langs, max_distance=10)
-        if best_lang is None:
+        try:
+            phrases = self._resources.load_intent("cancel", lang)
+        except FileNotFoundError:
             LOG.warning(f"cancel.intent not available for {lang}")
             return []
-        res_path = join(locale_dir, best_lang, "cancel.intent")
-        lines: List[str] = []
-        with open(res_path) as f:
-            for line in f:
-                line = line.strip()
-                if not line or line.startswith("#"):
-                    continue
-                lines.extend(expand(line))
-        return list({phrase.strip() for phrase in lines if phrase.strip()})
+        return list({phrase.strip() for phrase in phrases if phrase.strip()})
 
     def transform(
         self,
