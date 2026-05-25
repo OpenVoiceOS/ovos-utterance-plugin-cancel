@@ -87,27 +87,36 @@ class NevermindPlugin(UtteranceTransformer):
             skill_locale=join(dirname(__file__), "locale"))
 
     @lru_cache()
-    def get_cancel_words(self, lang: str = "en-US") -> List[str]:
-        """Return the list of cancel phrases for *lang*.
+    def _load_voc(self, base_name: str, lang: str) -> List[str]:
+        """Load a ``.voc`` for ``lang``, returning [] if none is available.
 
-        Phrases are loaded via :class:`ovos_spec_tools.LocaleResources`,
-        which applies the OVOS-INTENT-2 §2.2 smart language fallback and
-        the §3.6 sentence-template expansion. The result is LRU-cached per
-        language tag for the lifetime of the process.
-
-        Args:
-            lang: BCP-47 language tag (e.g. ``"en-US"``).
-
-        Returns:
-            List of cancel phrases, or an empty list when no locale is close
-            enough (distance ≥ 10).
-        """
+        Goes through :class:`ovos_spec_tools.LocaleResources` so the
+        OVOS-INTENT-2 §2.2 smart language fallback and §3.6 template
+        expansion apply uniformly to every vocabulary the plugin reads
+        (``cancel`` and ``skip``)."""
         try:
-            phrases = self._resources.load_vocabulary("cancel", lang)
+            phrases = self._resources.load_vocabulary(base_name, lang)
         except FileNotFoundError:
-            LOG.warning(f"cancel.voc not available for {lang}")
             return []
         return list({phrase.strip() for phrase in phrases if phrase.strip()})
+
+    def get_cancel_words(self, lang: str = "en-US") -> List[str]:
+        """Return the cancel phrases for *lang* (``cancel.voc``)."""
+        phrases = self._load_voc("cancel", lang)
+        if not phrases:
+            LOG.warning(f"cancel.voc not available for {lang}")
+        return phrases
+
+    def get_skip_prefixes(self, lang: str = "en-US") -> List[str]:
+        """Return the *veto prefixes* for *lang* (``skip.voc``).
+
+        Utterances starting with any of these phrases bypass the cancel
+        match — they are *about* a cancel word (define / spell /
+        pronounce / play / etc.) rather than commands to cancel. Partial
+        fix for issue #7. Missing ``skip.voc`` is non-fatal: the plugin
+        falls back to the historic "always check the suffix" behaviour.
+        """
+        return self._load_voc("skip", lang)
 
     def transform(
         self,
@@ -115,6 +124,11 @@ class NevermindPlugin(UtteranceTransformer):
         context: Optional[Dict[str, object]] = None,
     ) -> Tuple[List[str], Dict[str, object]]:
         """Drop utterances that end with a cancel phrase.
+
+        Skipped when the utterance starts with a phrase listed in
+        ``skip.voc`` for the active language — partial veto for the
+        edge cases tracked in issue #7 (e.g. ``"say nevermind"``,
+        ``"what is the opposite of nevermind"``).
 
         Args:
             utterances: Recognised utterance candidates.
@@ -128,8 +142,11 @@ class NevermindPlugin(UtteranceTransformer):
             original utterances are returned unchanged with an empty dict.
         """
         lang = _resolve_lang(context)
+        skip_prefixes = self.get_skip_prefixes(lang)
         for nevermind in self.get_cancel_words(lang):
             for utterance in utterances:
+                if any(utterance.startswith(p) for p in skip_prefixes):
+                    continue
                 if utterance.endswith(nevermind):
                     return [], {"canceled": True, "cancel_word": nevermind}
         return utterances, {}
