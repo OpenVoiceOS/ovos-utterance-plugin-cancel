@@ -14,11 +14,10 @@ jobs:
     with:
       runner: "ubuntu-latest"
       python_version: "3.11"
-      system_deps: "python3-dev swig libssl-dev portaudio19-dev libpulse-dev libfann-dev"
       install_extras: "test"
       test_path: "test/end2end/"
-      require_adapt: true
-      require_padatious: true
+      # The cancel transformer fires before intent matching, so the
+      # ovoscope cases here do not depend on any intent engine.
       bus_coverage: true
       bus_coverage_include: ""
       bus_coverage_exclude: "^Thread-|^intents$|^skills$|^__core__$"
