@@ -28,10 +28,8 @@ from functools import lru_cache
 from typing import Dict, List, Optional, Tuple
 
 from ovos_plugin_manager.templates.transformers import UtteranceTransformer
+from ovos_spec_tools import closest_lang, expand, standardize_lang
 from ovos_utils.log import LOG
-from ovos_utils.lang import standardize_lang_tag
-from ovos_utils.bracket_expansion import expand_template
-from langcodes import closest_match
 
 
 class NevermindPlugin(UtteranceTransformer):
@@ -62,22 +60,23 @@ class NevermindPlugin(UtteranceTransformer):
             enough (langcodes distance ≥ 10).
         """
         locale_dir = join(dirname(__file__), "locale")
-        langs = [l for l in os.listdir(locale_dir)
-                 if isfile(join(locale_dir, l, "cancel.intent"))]
-        best_lang, score = closest_match(lang, langs)
-        # langcodes distance: 0 = same, 1-3 = minor regional, 4-10 = significant regional
-        if score < 10:
-            res_path = join(locale_dir, best_lang, "cancel.intent")
-            lines: List[str] = []
-            with open(res_path) as f:
-                for line in f:
-                    line = line.strip()
-                    if not line or line.startswith("#"):
-                        continue
-                    lines.extend(expand_template(line))
-            return list({l.strip() for l in lines if l.strip()})
-        LOG.warning(f"cancel.intent not available for {lang}")
-        return []
+        langs = [d for d in os.listdir(locale_dir)
+                 if isfile(join(locale_dir, d, "cancel.intent"))]
+        # closest_lang gates on the < 10 distance threshold internally and
+        # returns None when no candidate is close enough.
+        best_lang = closest_lang(lang, langs, max_distance=10)
+        if best_lang is None:
+            LOG.warning(f"cancel.intent not available for {lang}")
+            return []
+        res_path = join(locale_dir, best_lang, "cancel.intent")
+        lines: List[str] = []
+        with open(res_path) as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                lines.extend(expand(line))
+        return list({phrase.strip() for phrase in lines if phrase.strip()})
 
     def transform(
         self,
@@ -98,7 +97,7 @@ class NevermindPlugin(UtteranceTransformer):
             original utterances are returned unchanged with an empty dict.
         """
         context = context or {}
-        lang = standardize_lang_tag(context.get("lang", "en-US"))
+        lang = standardize_lang(context.get("lang", "en-US"))
         for nevermind in self.get_cancel_words(lang):
             for utterance in utterances:
                 if utterance.endswith(nevermind):
