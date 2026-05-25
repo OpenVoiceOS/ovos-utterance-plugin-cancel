@@ -34,7 +34,7 @@ from ovos_utils.log import LOG
 class NevermindPlugin(UtteranceTransformer):
     """Utterance transformer that drops utterances ending with a cancel phrase.
 
-    Cancel phrases are loaded from ``locale/<lang>/cancel.intent`` and
+    Cancel phrases are loaded from ``locale/<lang>/cancel.voc`` and
     matched against the tail of each utterance.  On a match the utterance
     list is cleared and ``{"canceled": True, "cancel_word": <phrase>}`` is
     added to the context dict so downstream components can react.
@@ -66,9 +66,9 @@ class NevermindPlugin(UtteranceTransformer):
             enough (distance ≥ 10).
         """
         try:
-            phrases = self._resources.load_intent("cancel", lang)
+            phrases = self._resources.load_vocabulary("cancel", lang)
         except FileNotFoundError:
-            LOG.warning(f"cancel.intent not available for {lang}")
+            LOG.warning(f"cancel.voc not available for {lang}")
             return []
         return list({phrase.strip() for phrase in phrases if phrase.strip()})
 
