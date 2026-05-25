@@ -91,7 +91,19 @@ class NevermindPlugin(UtteranceTransformer):
             original utterances are returned unchanged with an empty dict.
         """
         context = context or {}
-        lang = standardize_lang(context.get("lang", "en-US"))
+        # ``context`` here is ``message.context`` per OVOS-MSG-1 §4. The
+        # normative language signal lives in the session carrier at
+        # ``context["session"]["lang"]``. ovos-core's IntentService also
+        # copies the resolved lang to a top-level ``context["lang"]`` for
+        # legacy callers (``ovos_core/intent_services/service.py``
+        # ``_handle_transformers``), but treating that as authoritative
+        # breaks for any consumer that hands the transformer a Message
+        # without going through that pre-processing step. Prefer the
+        # session.lang; fall back to the legacy top-level key; default
+        # ``"en-US"`` if neither is set.
+        session = context.get("session") or {}
+        lang = session.get("lang") or context.get("lang") or "en-US"
+        lang = standardize_lang(lang)
         for nevermind in self.get_cancel_words(lang):
             for utterance in utterances:
                 if utterance.endswith(nevermind):

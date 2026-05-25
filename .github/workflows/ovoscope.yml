@@ -17,8 +17,7 @@ jobs:
       install_extras: "test"
       test_path: "test/end2end/"
       # The cancel transformer fires before intent matching, so the
-      # ovoscope cases here do not depend on any intent engine.
-      bus_coverage: true
-      bus_coverage_include: ""
-      bus_coverage_exclude: "^Thread-|^intents$|^skills$|^__core__$"
+      # ovoscope cases here do not depend on any intent engine, and
+      # transformers don't emit bus events so bus-coverage tracking
+      # would be empty anyway.
       pr_comment: true
