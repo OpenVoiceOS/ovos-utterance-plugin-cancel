@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.1a1) (2026-06-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.0a2...0.3.1a1)
+
+**Merged pull requests:**
+
+- fix: require ovos-plugin-manager\>=2.1.0 for opm.\* entry points and cap ovos-\* deps at next major [\#40](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/40) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.3.0a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.0a2) (2026-06-16)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.0a1...0.3.0a2)
