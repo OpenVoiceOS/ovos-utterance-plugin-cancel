@@ -159,7 +159,7 @@ class TestCancelPluginEnabled(_CancelPluginTestBase):
                 # No cancel sequence — intent failure (hello-world
                 # doesn't register a "spell" intent in this rig).
                 Message("mycroft.audio.play_sound", {"uri": "snd/error.mp3"}),
-                Message("complete_intent_failure", {}),
+                Message("ovos.intent.unmatched", {}),
                 Message("ovos.utterance.handled", {}),
             ],
         ).execute(timeout=10)
@@ -185,7 +185,7 @@ class TestCancelPluginEnabled(_CancelPluginTestBase):
             expected_messages=[
                 message,
                 Message("mycroft.audio.play_sound", {"uri": "snd/error.mp3"}),
-                Message("complete_intent_failure", {}),
+                Message("ovos.intent.unmatched", {}),
                 Message("ovos.utterance.handled", {}),
             ],
         ).execute(timeout=10)
@@ -215,7 +215,7 @@ class TestCancelPluginDisabled(_CancelPluginTestBase):
                 # No cancel sequence — intent failure plays the error
                 # sound and emits handled.
                 Message("mycroft.audio.play_sound", {"uri": "snd/error.mp3"}),
-                Message("complete_intent_failure", {}),
+                Message("ovos.intent.unmatched", {}),
                 Message("ovos.utterance.handled", {}),
             ],
         ).execute(timeout=10)
