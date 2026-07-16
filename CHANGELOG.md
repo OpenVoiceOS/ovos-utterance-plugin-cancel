@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.2a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.2a2) (2026-07-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.2a1...0.3.2a2)
+
+**Merged pull requests:**
+
+- test: expect spec no-match terminal topic ovos.intent.unmatched [\#45](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/45) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.3.2a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.2a1) (2026-06-28)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.1a1...0.3.2a1)
