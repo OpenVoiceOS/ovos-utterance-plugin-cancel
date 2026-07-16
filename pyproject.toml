@@ -32,6 +32,7 @@ dependencies = [
 dev = [
     "pytest",
     "pytest-cov",
+    "ovos-spec-tools>=1.5.0a1",
 ]
 test = [
     "ovoscope<1.0.0",
