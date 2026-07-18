@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.3a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.3a1) (2026-07-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.2a2...0.3.3a1)
+
+**Merged pull requests:**
+
+- fix: remove unexpandable template line from cancel.intent locale files [\#44](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/44) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.3.2a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.2a2) (2026-07-16)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.2a1...0.3.2a2)
