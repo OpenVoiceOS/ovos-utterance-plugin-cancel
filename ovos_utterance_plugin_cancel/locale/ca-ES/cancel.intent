@@ -1,15 +1,10 @@
-cancel·la això
-cancel·la aquesta ordre
-cancel·la esta ordre
-cancel·la l'ordre
-cancel·la s'ordre
-cancel·la-ho
-no importa això
-no importa aquesta ordre
-no importa esta ordre
-oblida això
-oblida aquesta ordre
-oblida esta ordre
-oblida l'ordre
-oblida s'ordre
-oblida-ho
+# Documents the matching pattern: an utterance ending with a cancel
+# phrase from cancel.voc, optionally with no leading utterance at all
+# (a standalone cancel).
+#
+# The plugin currently does suffix-matching with the cancel.voc
+# vocabulary; this .intent is informational, not consumed at runtime,
+# and exists so the resource role is unambiguous in the locale folder.
+#
+# Pattern (needs cancel.voc for the <cancel> reference, so it stays a
+# comment rather than a live template): [{utterance}] <cancel>

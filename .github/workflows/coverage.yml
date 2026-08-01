@@ -11,6 +11,6 @@ jobs:
     with:
       python_version: '3.11'
       coverage_source: 'ovos_utterance_plugin_cancel'
-      test_path: 'test/'
-      install_extras: ''
+      test_path: 'test/unittests'
+      install_extras: '.[dev]'
       min_coverage: 0

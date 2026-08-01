@@ -23,21 +23,26 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "ovos-utils>=0.6.0,<1.0.0",
-    "ovos-plugin-manager>=0.0.1",
-    "langcodes>=3.0.0",
+    "ovos-utils>=0.11.1a1,<1.0.0",
+    "ovos-plugin-manager>=2.1.0,<3.0.0",
+    "ovos-spec-tools[langcodes]>=0.5.1a1",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest",
     "pytest-cov",
+    "ovos-spec-tools>=1.5.0a1",
+]
+test = [
+    "ovoscope<1.0.0",
+    "ovos-skill-hello-world",
 ]
 
 [project.urls]
 Homepage = "https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel"
 
-[project.entry-points."ovos.utterance.transformer"]
+[project.entry-points."opm.transformer.text"]
 ovos-utterance-cancel-plugin = "ovos_utterance_plugin_cancel:NevermindPlugin"
 
 [tool.setuptools]

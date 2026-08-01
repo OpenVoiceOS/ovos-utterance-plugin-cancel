@@ -1,14 +1,10 @@
-afbryd det
-annulle kommando
-annuller den kommando
-annuller den ordre
-annuller det
-annuller ordre
-glem den kommando
-glem den ordre
-glem det
-glem kommando
-glem ordre
-ligeglad med den kommando
-pyt med den rækkefølge
-pyt med det
+# Documents the matching pattern: an utterance ending with a cancel
+# phrase from cancel.voc, optionally with no leading utterance at all
+# (a standalone cancel).
+#
+# The plugin currently does suffix-matching with the cancel.voc
+# vocabulary; this .intent is informational, not consumed at runtime,
+# and exists so the resource role is unambiguous in the locale folder.
+#
+# Pattern (needs cancel.voc for the <cancel> reference, so it stays a
+# comment rather than a live template): [{utterance}] <cancel>

@@ -1,40 +1,68 @@
 # Changelog
 
-## [0.2.8a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.8a1) (2026-04-17)
+## [0.3.3a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.3a2) (2026-08-01)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.7a2...0.2.8a1)
-
-**Merged pull requests:**
-
-- fix: drop setup.py and requirements.txt [\#30](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/30) ([JarbasAl](https://github.com/JarbasAl))
-
-## [0.2.7a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.7a2) (2026-04-17)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.7a1...0.2.7a2)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.3a1...0.3.3a2)
 
 **Merged pull requests:**
 
-- ci: modernize workflows, add pyproject.toml, type hints and tests [\#28](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/28) ([JarbasAl](https://github.com/JarbasAl))
+- docs: rewrite README in Simplified Technical English [\#48](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/48) ([JarbasAl](https://github.com/JarbasAl))
 
-## [0.2.7a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.7a1) (2026-04-03)
+## [0.3.3a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.3a1) (2026-07-18)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.6a1...0.2.7a1)
-
-**Merged pull requests:**
-
-- fix\(i18n\): normalize locale folders to canonical BCP-47 [\#26](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/26) ([JarbasAl](https://github.com/JarbasAl))
-
-## [0.2.6a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.6a1) (2025-11-24)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/V0.2.5...0.2.6a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.2a2...0.3.3a1)
 
 **Merged pull requests:**
 
-- es-es/translate [\#24](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/24) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+- fix: remove unexpandable template line from cancel.intent locale files [\#44](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/44) ([JarbasAl](https://github.com/JarbasAl))
 
-## [V0.2.5](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/V0.2.5) (2025-07-31)
+## [0.3.2a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.2a2) (2026-07-16)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.5...V0.2.5)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.2a1...0.3.2a2)
+
+**Merged pull requests:**
+
+- test: expect spec no-match terminal topic ovos.intent.unmatched [\#45](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/45) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.3.2a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.2a1) (2026-06-28)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.1a1...0.3.2a1)
+
+**Merged pull requests:**
+
+- fix: lift ovos-spec-tools upper bound \(spec-tools 1.x\) [\#42](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/42) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.3.1a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.1a1) (2026-06-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.0a2...0.3.1a1)
+
+**Merged pull requests:**
+
+- fix: require ovos-plugin-manager\>=2.1.0 for opm.\* entry points and cap ovos-\* deps at next major [\#40](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/40) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.3.0a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.0a2) (2026-06-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.0a1...0.3.0a2)
+
+**Merged pull requests:**
+
+- chore: add missing shared CI workflows [\#38](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/38) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.3.0a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.0a1) (2026-05-25)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.9a1...0.3.0a1)
+
+**Merged pull requests:**
+
+- feat: cancel.blacklist veto for utterances \*about\* a cancel word \(partial \#7\) [\#35](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/35) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.9a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.2.9a1) (2026-05-25)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.2.8...0.2.9a1)
+
+**Merged pull requests:**
+
+- fix: cancel transformer not firing — entry-point group, lang lookup, locale typos [\#32](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/32) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
