@@ -24,7 +24,7 @@ classifiers = [
 requires-python = ">=3.10"
 dependencies = [
     "ovos-utils>=0.8.4",
-    "ovos-plugin-manager>=2.1.0",
+    "ovos-plugin-manager>=2.2.0",
     "ovos-spec-tools[langcodes]>=0.5.1a1",
 ]
 
