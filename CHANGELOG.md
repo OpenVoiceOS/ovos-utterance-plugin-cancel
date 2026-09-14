@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.4a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.4a1) (2026-09-14)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.3a2...0.3.4a1)
+
+**Merged pull requests:**
+
+- fix: floor-only requirements so a stable release installs on the testing channel [\#50](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/50) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.3.3a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.3a2) (2026-08-01)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.3a1...0.3.3a2)
