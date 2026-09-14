@@ -22,6 +22,18 @@ from ovos_config.config import Configuration
 from ovos_config.models import LocalConf
 from ovos_utils.log import LOG
 from ovoscope import End2EndTest, get_minicroft
+from packaging.version import Version
+from importlib.metadata import version as _pkg_version
+
+
+# ovos-core 2.3.0a1 (#788) renamed the no-match terminal topic from
+# ``complete_intent_failure`` to ``ovos.intent.unmatched``. The testing
+# channel ships an older ovos-core, so expect the topic that the
+# installed ovos-core sends.
+UNMATCHED_TOPIC = (
+    "ovos.intent.unmatched"
+    if Version(_pkg_version("ovos-core")) >= Version("2.3.0a1")
+    else "complete_intent_failure")
 
 
 # The entry-point name under which this plugin is registered. The
@@ -159,7 +171,7 @@ class TestCancelPluginEnabled(_CancelPluginTestBase):
                 # No cancel sequence — intent failure (hello-world
                 # doesn't register a "spell" intent in this rig).
                 Message("mycroft.audio.play_sound", {"uri": "snd/error.mp3"}),
-                Message("ovos.intent.unmatched", {}),
+                Message(UNMATCHED_TOPIC, {}),
                 Message("ovos.utterance.handled", {}),
             ],
         ).execute(timeout=10)
@@ -169,14 +181,15 @@ class TestCancelPluginEnabled(_CancelPluginTestBase):
     def test_passthrough_without_cancel_word(self):
         """An utterance with no cancel suffix is not intercepted.
 
-        ``hello world`` doesn't match any registered intent in this
-        minimal test rig, so the expected outcome is intent-failure
+        ``purple elephant sandwich`` doesn't match any registered intent
+        in this minimal test rig (newer hello-world releases match
+        ``hello world``), so the expected outcome is intent-failure
         (``snd/error.mp3``) — the point being that the cancel
         sequence (``ovos.utterance.cancelled``) is **absent**, which
         the strict ovoscope message-type + count checks enforce."""
         session = Session("123")
         session.lang = "en-US"
-        message = self._utterance("hello world", session)
+        message = self._utterance("purple elephant sandwich", session)
 
         End2EndTest(
             minicroft=self.minicroft,
@@ -185,7 +198,7 @@ class TestCancelPluginEnabled(_CancelPluginTestBase):
             expected_messages=[
                 message,
                 Message("mycroft.audio.play_sound", {"uri": "snd/error.mp3"}),
-                Message("ovos.intent.unmatched", {}),
+                Message(UNMATCHED_TOPIC, {}),
                 Message("ovos.utterance.handled", {}),
             ],
         ).execute(timeout=10)
@@ -215,7 +228,7 @@ class TestCancelPluginDisabled(_CancelPluginTestBase):
                 # No cancel sequence — intent failure plays the error
                 # sound and emits handled.
                 Message("mycroft.audio.play_sound", {"uri": "snd/error.mp3"}),
-                Message("ovos.intent.unmatched", {}),
+                Message(UNMATCHED_TOPIC, {}),
                 Message("ovos.utterance.handled", {}),
             ],
         ).execute(timeout=10)
