@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.4a2](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.4a2) (2026-09-29)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.4a1...0.3.4a2)
+
+**Merged pull requests:**
+
+- translate\(kab\): update cancel.voc [\#52](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/pull/52) ([ovos-localize[bot]](https://github.com/apps/ovos-localize))
+
 ## [0.3.4a1](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/tree/0.3.4a1) (2026-09-14)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-utterance-plugin-cancel/compare/0.3.3a2...0.3.4a1)
