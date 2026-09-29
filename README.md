@@ -3,9 +3,9 @@
 [![PyPI](https://img.shields.io/pypi/v/ovos-utterance-plugin-cancel)](https://pypi.org/project/ovos-utterance-plugin-cancel/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
-An [OpenVoiceOS](https://openvoiceos.org) utterance transformer plugin that cancels an utterance when the user says a cancel/nevermind phrase at the end.
+This is an [OpenVoiceOS](https://openvoiceos.org) utterance transformer plugin. It cancels an utterance when the user says a cancel or "nevermind" phrase at the end.
 
-**Example:** *"Hey Mycroft, can you tell me the weather in… ugh, nevermind that"* → utterance is dropped, no skill fires.
+**Example:** for the phrase *"Hey Mycroft, can you tell me the weather in… ugh, nevermind that"*, the plugin drops the utterance, and no skill fires.
 
 ## Installation
 
@@ -15,9 +15,9 @@ pip install ovos-utterance-plugin-cancel
 
 ## How it works
 
-The plugin runs before skill matching. It checks whether the utterance tail matches any phrase from `locale/<lang>/cancel.intent`. On a match, it returns an empty utterance list with context `{"canceled": True, "cancel_word": "<phrase>"}`.
+The plugin runs before skill matching. It checks whether the end of the utterance matches any phrase from `locale/<lang>/cancel.intent`. On a match, it returns an empty utterance list with context `{"canceled": True, "cancel_word": "<phrase>"}`.
 
-Language selection is automatic via `langcodes.closest_match`. Phrases support bracket-expansion syntax (e.g. `cancel (it|that)`).
+The plugin selects the language automatically with `langcodes.closest_match`. Phrases support bracket-expansion syntax, for example `cancel (it|that)`.
 
 ## Supported languages
 
@@ -54,7 +54,12 @@ uv pip install -e ".[dev]"
 uv run pytest test/ -v --cov=ovos_utterance_plugin_cancel
 ```
 
+## Related projects
+
+- [OpenVoiceOS/ovos-utterance-normalizer](https://github.com/OpenVoiceOS/ovos-utterance-normalizer): normalizes utterances before this plugin runs
+- [OpenVoiceOS/ovos-utterance-corrections-plugin](https://github.com/OpenVoiceOS/ovos-utterance-corrections-plugin): corrects utterances after this plugin runs
+
 ## Credits
 
-- [@penrods](https://github.com/MycroftAI/mycroft-core/pull/1274) — original Mycroft PR
-- [NeonGecko](https://github.com/NeonGeckoCom/neon-utterance-plugin-cancel) — original plugin
+- [@penrods](https://github.com/MycroftAI/mycroft-core/pull/1274): original Mycroft PR
+- [NeonGecko](https://github.com/NeonGeckoCom/neon-utterance-plugin-cancel): original plugin

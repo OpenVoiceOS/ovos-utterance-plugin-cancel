@@ -22,22 +22,56 @@
 # LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE,  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-import os
-from os.path import join, dirname, isfile
+from os.path import join, dirname
 from functools import lru_cache
 from typing import Dict, List, Optional, Tuple
 
 from ovos_plugin_manager.templates.transformers import UtteranceTransformer
+from ovos_spec_tools import LocaleResources, standardize_lang
 from ovos_utils.log import LOG
-from ovos_utils.lang import standardize_lang_tag
-from ovos_utils.bracket_expansion import expand_template
-from langcodes import closest_match
+
+
+def _resolve_lang(context: Optional[Dict[str, object]],
+                  default: str = "en-US") -> str:
+    """Return the BCP-47 language tag for an UtteranceTransformer call.
+
+    ``context`` is the OVOS-MSG-1 ``message.context`` dict the
+    transformer service hands to ``transform()``. Two sources may carry
+    a language:
+
+    1. ``context["lang"]`` — the top-level convenience key that
+       ovos-core's IntentService writes before invoking transformers
+       (``ovos_core/intent_services/service.py::_handle_transformers``).
+       This is the **current contract** between core and transformer
+       plugins; trust it when present.
+    2. ``context["session"]["lang"]`` — the normative session-carrier
+       field per OVOS-MSG-1 §4. Falls back here when a caller hands the
+       transformer a Message without going through ovos-core's
+       pre-processing (HiveMind relays, tests, alternative bus
+       clients).
+
+    The convenience top-level key is a known gap in the spec — the
+    transformer signature will likely grow an explicit ``lang`` kwarg
+    in a future revision, at which point this helper collapses to a
+    one-liner. Until then, the dual lookup keeps the plugin robust
+    against direct callers.
+
+    ``dict.get(key, default)`` returns ``None`` for keys present with a
+    ``None`` value (only a *missing* key triggers the default), so the
+    ``or`` chain handles explicit ``None`` correctly.
+    """
+    context = context or {}
+    session = context.get("session") or {}
+    lang = (context.get("lang")
+            or session.get("lang")
+            or default)
+    return standardize_lang(lang)
 
 
 class NevermindPlugin(UtteranceTransformer):
     """Utterance transformer that drops utterances ending with a cancel phrase.
 
-    Cancel phrases are loaded from ``locale/<lang>/cancel.intent`` and
+    Cancel phrases are loaded from ``locale/<lang>/cancel.voc`` and
     matched against the tail of each utterance.  On a match the utterance
     list is cleared and ``{"canceled": True, "cancel_word": <phrase>}`` is
     added to the context dict so downstream components can react.
@@ -45,39 +79,41 @@ class NevermindPlugin(UtteranceTransformer):
 
     def __init__(self, name: str = "ovos-utterance-cancel", priority: int = 15) -> None:
         super().__init__(name, priority)
+        # OVOS-INTENT-2 resource loader. One instance serves every language
+        # the plugin ships; the language is a parameter of each load call.
+        # The default lang_resolver is `closest_lang` (OVOS-INTENT-2 §2.2
+        # smart fallback), gated on distance < 10.
+        self._resources = LocaleResources(
+            skill_locale=join(dirname(__file__), "locale"))
 
     @lru_cache()
     def get_cancel_words(self, lang: str = "en-US") -> List[str]:
-        """Return the list of cancel phrases for *lang*.
+        """Return the cancel phrases for *lang* (``cancel.voc``)."""
+        try:
+            phrases = self._resources.load_vocabulary("cancel", lang)
+        except FileNotFoundError:
+            LOG.warning(f"cancel.voc not available for {lang}")
+            return []
+        return list({phrase.strip() for phrase in phrases if phrase.strip()})
 
-        Phrases are read from ``locale/<best_match>/cancel.intent``, expanded
-        via bracket-expansion, and deduplicated.  The result is LRU-cached per
-        language tag for the lifetime of the process.
+    @lru_cache()
+    def get_cancel_blacklist(self, lang: str = "en-US") -> List[str]:
+        """Return the *veto prefixes* for *lang* (``cancel.blacklist``).
 
-        Args:
-            lang: BCP-47 language tag (e.g. ``"en-US"``).
-
-        Returns:
-            List of cancel phrases, or an empty list when no locale is close
-            enough (langcodes distance ≥ 10).
+        OVOS-INTENT-2 §4.3 defines ``.blacklist`` as a phrase set that
+        an engine consults to *exclude* matches. Here, utterances that
+        start with any phrase in ``cancel.blacklist`` bypass the cancel
+        suffix match — they are *about* a cancel word (define / spell /
+        pronounce / play / etc.) rather than commands to cancel.
+        Partial fix for issue #7. A missing ``cancel.blacklist`` is
+        non-fatal: the plugin falls back to the historic
+        "always check the suffix" behaviour.
         """
-        locale_dir = join(dirname(__file__), "locale")
-        langs = [l for l in os.listdir(locale_dir)
-                 if isfile(join(locale_dir, l, "cancel.intent"))]
-        best_lang, score = closest_match(lang, langs)
-        # langcodes distance: 0 = same, 1-3 = minor regional, 4-10 = significant regional
-        if score < 10:
-            res_path = join(locale_dir, best_lang, "cancel.intent")
-            lines: List[str] = []
-            with open(res_path) as f:
-                for line in f:
-                    line = line.strip()
-                    if not line or line.startswith("#"):
-                        continue
-                    lines.extend(expand_template(line))
-            return list({l.strip() for l in lines if l.strip()})
-        LOG.warning(f"cancel.intent not available for {lang}")
-        return []
+        try:
+            phrases = self._resources.load_blacklist("cancel", lang)
+        except FileNotFoundError:
+            return []
+        return list({phrase.strip() for phrase in phrases if phrase.strip()})
 
     def transform(
         self,
@@ -85,6 +121,11 @@ class NevermindPlugin(UtteranceTransformer):
         context: Optional[Dict[str, object]] = None,
     ) -> Tuple[List[str], Dict[str, object]]:
         """Drop utterances that end with a cancel phrase.
+
+        Skipped when the utterance starts with a phrase listed in
+        ``cancel.blacklist`` for the active language — partial veto for
+        the edge cases tracked in issue #7 (e.g. ``"say nevermind"``,
+        ``"what is the opposite of nevermind"``).
 
         Args:
             utterances: Recognised utterance candidates.
@@ -97,10 +138,12 @@ class NevermindPlugin(UtteranceTransformer):
             ``{"canceled": True, "cancel_word": <phrase>}``.  Otherwise the
             original utterances are returned unchanged with an empty dict.
         """
-        context = context or {}
-        lang = standardize_lang_tag(context.get("lang", "en-US"))
+        lang = _resolve_lang(context)
+        blacklist = self.get_cancel_blacklist(lang)
         for nevermind in self.get_cancel_words(lang):
             for utterance in utterances:
+                if any(utterance.startswith(p) for p in blacklist):
+                    continue
                 if utterance.endswith(nevermind):
                     return [], {"canceled": True, "cancel_word": nevermind}
         return utterances, {}
